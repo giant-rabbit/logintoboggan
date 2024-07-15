@@ -1046,12 +1046,12 @@ function logintoboggan_user_load($users) {
 /**
  * Implement hook_user_update().
  */
-function logintoboggan_user_update(&$edit, $account, $category) {
+function logintoboggan_user_update($account) {
   // Only perform this check if an admin is editing the account.
-  if (user_access('administer users') && isset($edit['roles'])) {
+  if (user_access('administer users') && isset($account->roles)) {
     // Check to see if roles present, and the pre-auth role was present when
     // the form was initially displayed.
-    if (isset($edit['logintoboggan_pre_auth_check'])) {
+    if (isset($account->logintoboggan_pre_auth_check)) {
       // If the pre-auth is set to the auth user, then no further checking is
       // necessary.
       $validating_id = logintoboggan_validating_id();
@@ -1059,7 +1059,7 @@ function logintoboggan_user_update(&$edit, $account, $category) {
       if ($pre_auth) {
         // Check to see if an admin has manually removed the pre-auth role from
         // the user. If so, send the account activation email.
-        if (!isset($edit['roles'][$validating_id]) || !$edit['roles'][$validating_id]) {
+        if (!isset($account->roles[$validating_id]) || !$account->roles[$validating_id]) {
           // Mail the user, letting them know their account now has auth user perms.
           _user_mail_notify('status_activated', $account);
         }
