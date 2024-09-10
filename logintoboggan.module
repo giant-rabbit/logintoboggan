@@ -442,7 +442,7 @@ function logintoboggan_user_register_submit($form, &$form_state) {
   // Populate $edit with the properties of $account, which have been edited on
   // this form by taking over all values, which appear in the form values too.
   $edit = array_intersect_key((array) $account, $form_state['values']);
-  $result = user_save($account, $edit);
+  $result = user_save($account);
 
   // Terminate if an error occurred during user_save().
   if (!$result) {
